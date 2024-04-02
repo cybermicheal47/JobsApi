@@ -1,0 +1,232 @@
+openapi: 3.0.0
+info:
+  title: JOBS API
+  contact: {}
+  version: "1.0"
+servers:
+  - url: https://jobsapi-fzba.onrender.com/api/v1
+    variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+        - AUTH
+      summary: Register
+      operationId: Register
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/RegisterRequest"
+                - example:
+                    email: john@mg.com
+                    password: dsfeddwwwdw
+                    name: Micheal
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+        - AUTH
+      summary: LOGIN
+      operationId: LOGIN
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/LOGINREQUEST"
+                - example:
+                    email: john@mg.com
+                    password: dsfeddwwwdw
+            example:
+              email: john@mg.com
+              password: dsfeddwwwdw
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /jobs:
+    post:
+      tags:
+        - JOBS
+      summary: POST JOBS
+      operationId: POSTJOBS
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/POSTJOBSREQUEST"
+                - example:
+                    company: Binggle
+                    position: web dev
+            example:
+              company: Binggle
+              position: web dev
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    get:
+      tags:
+        - JOBS
+      summary: GET ALL JOBS
+      operationId: GETALLJOBS
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /jobs/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The user ID
+    get:
+      tags:
+        - JOBS
+      summary: Get single Job
+      operationId: GetsingleJob
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    patch:
+      tags:
+        - JOBS
+      summary: Update Job
+      operationId: UpdateJob
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/UpdateJobRequest"
+                - example:
+                    company: blueberry
+                    position: SOFTWARE ENGER
+            example:
+              company: blueberry
+              position: SOFTWARE ENGER
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    delete:
+      tags:
+        - JOBS
+      summary: Delete Job
+      operationId: DeleteJob
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+components:
+  schemas:
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+        - email
+        - password
+        - name
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+      example:
+        email: john@mg.com
+        password: dsfeddwwwdw
+        name: Micheal
+    LOGINREQUEST:
+      title: LOGINREQUEST
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: john@mg.com
+        password: dsfeddwwwdw
+    POSTJOBSREQUEST:
+      title: POSTJOBSREQUEST
+      required:
+        - company
+        - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: Binggle
+        position: web dev
+    UpdateJobRequest:
+      title: UpdateJobRequest
+      required:
+        - company
+        - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: blueberry
+        position: SOFTWARE ENGER
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: AUTH
+    description: ""
+  - name: JOBS
+    description: ""

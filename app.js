@@ -17,6 +17,10 @@ const rateLimiter = require("express-rate-limit");
 const connectDB = require("./db/connect");
 const Job = require("./models/Job");
 
+const swaggerUI = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load("./swagger.yaml");
+
 app.set("trust proxy", 1);
 app.use(
   rateLimiter({
@@ -30,8 +34,11 @@ app.use(helmet());
 app.use(cors());
 // routes
 app.get("/", (req, res) => {
-  res.send("jobs api");
+  res.send('<h1>Jobs API</h1><a href="/api-docs">Documentation</a>');
 });
+
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
 // routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authenticateUser, jobsRouter);
